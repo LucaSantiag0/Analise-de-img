@@ -30,25 +30,20 @@ imagem = realcar.enhance(1.5)
 imagem.save('imagem_contornos.jpg')
 
 #------------------------------------------------
-import cv2
-import numpy as np
 
-# Corrigir a leitura da imagem
-img = cv2.imread('imagem_contornos.jpg', cv2.IMREAD_GRAYSCALE)
 
-# Contar o número de pixels brancos (valor 255) e pretos (valor 0)
+img = cv2.imread('imagem_contornos.jpg')
+
 numero_pixels_branco = np.sum(img == 255)
 numero_pixels_preto = np.sum(img == 0)
 
-# Exibir os números de pixels brancos e pretos
 print('Número de pixels brancos:', numero_pixels_branco)
+
 print('Número de pixels pretos:', numero_pixels_preto)
 
-# Calcular o percentual de pixels brancos
-percentual_pixels_brancos = numero_pixels_branco / (numero_pixels_branco + numero_pixels_preto) * 100
-
-# Verificar o percentual de pixels brancos
-if percentual_pixels_brancos >= 30:
-    print('Imagem com câncer')
-else:
-    print('Imagem sem câncer')
+percentual_pixels_brancos = numero_pixels_branco/ (numero_pixels_branco + numero_pixels_preto) * 100
+ 
+print('Percentual pixels brancos:', percentual_pixels_brancos)
+if (percentual_pixels_brancos >= 30):
+	print('Imagem com câncer')
+else: print('Imagem sem câncer')
