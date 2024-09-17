@@ -1,26 +1,37 @@
 from PIL import Image
+import cv2
 import numpy as np
 
 # Abrir a imagem
-imagem = Image.open('gatodeoculos.png').convert('RGB')
-imagem_np = np.array(imagem)
+imagem = cv2.imread('gatodeoculos.png')
 
-# Criar imagens de canais separados
-red_channel = np.zeros_like(imagem_np)
-green_channel = np.zeros_like(imagem_np)
-blue_channel = np.zeros_like(imagem_np)
+azul, verde, vermelho = cv2.split(imagem)
 
-# Preencher os canais com os valores correspondentes
-red_channel[:, :, 0] = imagem_np[:, :, 0]
-green_channel[:, :, 1] = imagem_np[:, :, 1]
-blue_channel[:, :, 2] = imagem_np[:, :, 2]
+imagem_mesclada = cv2.merge((azul, verde, vermelho))
 
-# Converter para imagens Pillow
-red_img = Image.fromarray(red_channel)
-green_img = Image.fromarray(green_channel)
-blue_img = Image.fromarray(blue_channel)
+imagem_invertida = cv2.merge((vermelho, verde, azul))
 
-# Salvar imagens
-red_img.save('red_channel.png')
-green_img.save('green_channel.png')
-blue_img.save('blue_channel.png')
+blank = np.zeros(imagem.shape[:2], dtype='uint8')
+
+canal_azul = cv2.merge([azul,blank,blank])
+
+canal_azul_gimp = cv2.merge([azul,azul,azul])
+
+canal_verde = cv2.merge([blank,verde,blank])
+
+canal_verde_gimp = cv2.merge([verde,verde,verde])
+
+canal_vermelho = cv2.merge([blank,blank,vermelho])
+
+canal_vermelho_gimp = cv2.merge([vermelho,vermelho,vermelho])
+
+#conversão para cores adjacentes
+
+cv2.imwrite('Azul.png', canal_azul)
+cv2.imwrite('Azul_gimp.png', canal_azul_gimp)
+cv2.imwrite('Verde.png', canal_verde)
+cv2.imwrite('Verde_gimp.png', canal_verde_gimp)
+cv2.imwrite('Vermelho.png', canal_vermelho)
+cv2.imwrite('Vermelho_gimp.png', canal_vermelho_gimp)
+cv2.imwrite("imagem_mesclada.png", imagem_mesclada)
+cv2.imwrite("imagem_invertida.png", imagem_invertida)
