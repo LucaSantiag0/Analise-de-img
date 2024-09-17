@@ -24,7 +24,7 @@ for contorno in contornos:
 
 # Realçar o contraste da imagem
 realcar = ImageEnhance.Contrast(imagem)
-imagem = realcar.enhance(1.5)
+imagem = realcar.enhance(15.5)
 
 # Salvar a nova imagem com os contornos
 imagem.save('imagem_contornos.jpg')
